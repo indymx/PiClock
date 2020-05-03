@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-                 # NOQA
 
 import sys
-import os
+import os/
+
 import platform
 import signal
 import datetime
@@ -233,8 +234,8 @@ def wxfinished():
     global wind, wind2, wdate, bottom, forecast
     global wxicon2, temper2, wxdesc, attribution
 
-    attribution.setText("DarkSky.net")
-    attribution2.setText("DarkSky.net")
+    attribution.setText("Openweathermap.org")
+    attribution2.setText("Openweathermap.org")
 
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
@@ -407,13 +408,10 @@ def getwx():
     global wxurl
     global wxreply
     print "getting current and forecast:" + time.ctime()
-    wxurl = 'https://api.darksky.net/forecast/' + \
-        ApiKeys.dsapi + \
-        '/'
-    wxurl += str(Config.location.lat) + ',' + \
+    wxurl = 'https://api.openweathermap.org/data/2.5/weather?lat='        
+    wxurl += str(Config.location.lat) + '?lon=' + \
         str(Config.location.lng)
-    wxurl += '?units=us&lang=' + Config.Language.lower()
-    wxurl += '&r=' + str(random.random())
+    wxurl += '&appid=' + ApiKeys.dsapi
     print wxurl
     r = QUrl(wxurl)
     r = QNetworkRequest(r)
