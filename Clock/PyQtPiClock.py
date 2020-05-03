@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-                 # NOQA
 
 import sys
-import os/
+import os
 
 import platform
 import signal
@@ -239,7 +239,7 @@ def wxfinished():
 
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
-    f = wxdata['currently']
+    f = wxdata['weather']
     wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
     wxicon.setPixmap(wxiconpixmap.scaled(
         wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
