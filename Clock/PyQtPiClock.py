@@ -416,7 +416,7 @@ def getwx():
     r = QNetworkRequest(r)
     wxreply = manager.get(r)
     wxreply.finished.connect(wxfinished)
-    print wxreply
+    print (json.dumps(wxreply, indent=4, sort_keys=True))
 
 
 def getallwx():
