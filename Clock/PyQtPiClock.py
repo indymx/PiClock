@@ -240,15 +240,15 @@ def wxfinished():
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
     f = wxdata['weather']
-    wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
-    wxicon.setPixmap(wxiconpixmap.scaled(
-        wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
-        Qt.SmoothTransformation))
-    wxicon2.setPixmap(wxiconpixmap.scaled(
-        wxicon.width(),
-        wxicon.height(),
-        Qt.IgnoreAspectRatio,
-        Qt.SmoothTransformation))
+#    wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
+#    wxicon.setPixmap(wxiconpixmap.scaled(
+#        wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
+#        Qt.SmoothTransformation))
+#    wxicon2.setPixmap(wxiconpixmap.scaled(
+#        wxicon.width(),
+#        wxicon.height(),
+#        Qt.IgnoreAspectRatio,
+#        Qt.SmoothTransformation))
 
 
     if Config.metric:
