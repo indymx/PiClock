@@ -227,6 +227,7 @@ def gettemp():
     tempreply = manager.get(r)
     tempreply.finished.connect(tempfinished)
 
+
 def wxfinished():
     global wxreply, wxdata
     global wxicon, temper, wxdesc, press, humidity
@@ -274,14 +275,16 @@ def wxfinished():
         temper2.setText('%.1f' % (f['temp']) + u'°F')
         press.setText(Config.LPressure + '%.2f' % pressi(f['pressure']) + 'in')
         humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity']*100.0))
-        wd = bearing(f['wind']['deg'])
+        wd = bearing(f['wind'][0]['deg'])
         if Config.wind_degrees:
-            wd = str(f['wind']'[deg']) + u'°'
+            wd = str(f['wind'][0]['deg']) + u'°'
         wind.setText(Config.LWind +
                      wd + ' ' +
-                     '%.1f' % (f['wind']['speed']) + 'mph'
+                     '%.1f' % (f['wind'][0['speed']]) + 'mph' +
+                     Config.Lgusting +
+                     '%.1f' % (f['windGust']) + 'mph')
         wind2.setText(Config.LFeelslike +
-                      '%.1f' % (f['feels_like']) + u'°F')
+                      '%.1f' % (f['feelslike']) + u'°F')
         wdate.setText("{0:%H:%M}".format(datetime.datetime.fromtimestamp(
             int(f['time']))))
 # Config.LPrecip1hr + f['precip_1hr_in'] + 'in ' +
