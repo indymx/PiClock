@@ -239,6 +239,7 @@ def wxfinished():
 
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
+    print (json.dumps(wxdata, indent=4, sort_keys=True))
     f = wxdata['weather']
     wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
     wxicon.setPixmap(wxiconpixmap.scaled(
@@ -416,7 +417,7 @@ def getwx():
     r = QNetworkRequest(r)
     wxreply = manager.get(r)
     wxreply.finished.connect(wxfinished)
-    print (json.dumps(wxreply, indent=4, sort_keys=True))
+    
 
 
 def getallwx():
