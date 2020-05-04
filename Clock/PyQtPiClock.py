@@ -411,7 +411,7 @@ def getwx():
     wxurl = 'https://api.openweathermap.org/data/2.5/weather?lat='        
     wxurl += str(Config.location.lat) + '&lon=' + \
         str(Config.location.lng)
-    wxurl += '&appid=' + ApiKeys.dsapi
+    wxurl += '&units=imperial&appid=' + ApiKeys.dsapi 
     print wxurl
     r = QUrl(wxurl)
     r = QNetworkRequest(r)
