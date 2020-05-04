@@ -271,7 +271,7 @@ def wxfinished():
 # Config.LPrecip1hr + f['precip_1hr_metric'] + 'mm ' +
 # Config.LToday + f['precip_today_metric'] + 'mm')
     else:
-        temper.setText('%.1f' % (f[int('temp')]) + u'°F')
+        temper.setText('%.1f' % (f[int(temp)]) + u'°F')
         temper2.setText('%.1f' % (f[int('temp')]) + u'°F')
         press.setText(Config.LPressure + '%.2f' % pressi(f[int('pressure')]) + 'in')
         humidity.setText(Config.LHumidity + '%.0f%%' % (f[int('humidity')]*100.0))
