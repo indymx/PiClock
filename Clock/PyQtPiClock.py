@@ -409,7 +409,7 @@ def getwx():
     global wxreply
     print "getting current and forecast:" + time.ctime()
     wxurl = 'https://api.openweathermap.org/data/2.5/weather?lat='        
-    wxurl += str(Config.location.lat) + '?lon=' + \
+    wxurl += str(Config.location.lat) + '&lon=' + \
         str(Config.location.lng)
     wxurl += '&appid=' + ApiKeys.dsapi
     print wxurl
