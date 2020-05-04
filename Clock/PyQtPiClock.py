@@ -274,12 +274,12 @@ def wxfinished():
         temper2.setText('%.1f' % (f['temp']) + u'°F')
         press.setText(Config.LPressure + '%.2f' % pressi(f['pressure']) + 'in')
         humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity']*100.0))
-        wd = bearing(f['wind['deg']'])
+        wd = bearing(f['wind']['deg'])
         if Config.wind_degrees:
-            wd = str(f['wind['deg']) + u'°'
+            wd = str(f['wind']['deg']) + u'°'
         wind.setText(Config.LWind +
                      wd + ' ' +
-                     '%.1f' % (f['wind['speed']) + 'mph' +
+                     '%.1f' % (f['wind']['speed']) + 'mph' +
         wind2.setText(Config.LFeelslike +
                       '%.1f' % (f['feels_like']) + u'°F')
         wdate.setText("{0:%H:%M}".format(datetime.datetime.fromtimestamp(
