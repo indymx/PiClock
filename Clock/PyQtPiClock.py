@@ -240,15 +240,15 @@ def wxfinished():
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
     f = wxdata['weather']
-    # wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
-    # wxicon.setPixmap(wxiconpixmap.scaled(
-    #     wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
-    #     Qt.SmoothTransformation))
-    # wxicon2.setPixmap(wxiconpixmap.scaled(
-    #     wxicon.width(),
-    #     wxicon.height(),
-    #     Qt.IgnoreAspectRatio,
-    #     Qt.SmoothTransformation))
+    wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
+    wxicon.setPixmap(wxiconpixmap.scaled(
+        wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
+        Qt.SmoothTransformation))
+    wxicon2.setPixmap(wxiconpixmap.scaled(
+        wxicon.width(),
+        wxicon.height(),
+        Qt.IgnoreAspectRatio,
+        Qt.SmoothTransformation))
 
 
     if Config.metric:
@@ -271,7 +271,7 @@ def wxfinished():
 # Config.LPrecip1hr + f['precip_1hr_metric'] + 'mm ' +
 # Config.LToday + f['precip_today_metric'] + 'mm')
     else:
-        temper.setText('%.1f' % (f['temp']) + u'°F')
+        temper.setText('%.1f' % (f[int('temp')]) + u'°F')
         temper2.setText('%.1f' % (f['temp']) + u'°F')
         press.setText(Config.LPressure + '%.2f' % pressi(f['pressure']) + 'in')
         humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity']*100.0))
