@@ -308,102 +308,102 @@ def wxfinished():
 
     bottom.setText(bottomText)
 
-    for i in range(0, 3):
-        f = wxdata['hourly']['data'][i * 3 + 2]
-        fl = forecast[i]
-        icon = fl.findChild(QtGui.QLabel, "icon")
-        wxiconpixmap = QtGui.QPixmap(
-            Config.icons + "/" + f['icon'] + ".png")
-        icon.setPixmap(wxiconpixmap.scaled(
-            icon.width(),
-            icon.height(),
-            Qt.IgnoreAspectRatio,
-            Qt.SmoothTransformation))
-        wx = fl.findChild(QtGui.QLabel, "wx")
-        day = fl.findChild(QtGui.QLabel, "day")
-        day.setText("{0:%A %I:%M%p}".format(datetime.datetime.fromtimestamp(
-            int(f['time']))))
-        s = ''
-        pop = 0
-        ptype = ''
-        paccum = 0
-        if ('precipProbability' in f):
-            pop = float(f['precipProbability']) * 100.0
-        if ('precipAccumulation' in f):
-            paccum = float(f['precipAccumulation'])
-        if ('precipType' in f):
-            ptype = f['precipType']
-
-        if (pop > 0.0 or ptype != ''):
-            s += '%.0f' % pop + '% '
-        if Config.metric:
-            if (ptype == 'snow'):
-                if (paccum > 0.05):
-                    s += Config.LSnow + '%.0f' % heightm(paccum) + 'mm '
-            else:
-                if (paccum > 0.05):
-                    s += Config.LRain + '%.0f' % heightm(paccum) + 'mm '
-            s += '%.0f' % tempm(f['temperature']) + u'°C'
-        else:
-            if (ptype == 'snow'):
-                if (paccum > 0.05):
-                    s += Config.LSnow + '%.0f' % paccum + 'in '
-            else:
-                if (paccum > 0.05):
-                    s += Config.LRain + '%.0f' % paccum + 'in '
-            s += '%.0f' % (f['temperature']) + u'°F'
-
-        wx.setStyleSheet("#wx { font-size: " + str(int(25 * xscale)) + "px; }")
-        wx.setText(f['summary'] + "\n" + s)
-
-    for i in range(3, 9):
-        f = wxdata['daily']['data'][i - 3]
-        fl = forecast[i]
-        icon = fl.findChild(QtGui.QLabel, "icon")
-        wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
-        icon.setPixmap(wxiconpixmap.scaled(
-            icon.width(),
-            icon.height(),
-            Qt.IgnoreAspectRatio,
-            Qt.SmoothTransformation))
-        wx = fl.findChild(QtGui.QLabel, "wx")
-        day = fl.findChild(QtGui.QLabel, "day")
-        day.setText("{0:%A}".format(datetime.datetime.fromtimestamp(
-            int(f['time']))))
-        s = ''
-        pop = 0
-        ptype = ''
-        paccum = 0
-        if ('precipProbability' in f):
-            pop = float(f['precipProbability']) * 100.0
-        if ('precipAccumulation' in f):
-            paccum = float(f['precipAccumulation'])
-        if ('precipType' in f):
-            ptype = f['precipType']
-
-        if (pop > 0.05 or ptype != ''):
-            s += '%.0f' % pop + '% '
-        if Config.metric:
-            if (ptype == 'snow'):
-                if (paccum > 0.05):
-                    s += Config.LSnow + '%.0f' % heightm(paccum) + 'mm '
-            else:
-                if (paccum > 0.05):
-                    s += Config.LRain + '%.0f' % heightm(paccum) + 'mm '
-            s += '%.0f' % tempm(f['temperatureHigh']) + '/' + \
-                 '%.0f' % tempm(f['temperatureLow'])
-        else:
-            if (ptype == 'snow'):
-                if (paccum > 0.05):
-                    s += Config.LSnow + '%.1f' % paccum + 'in '
-            else:
-                if (paccum > 0.05):
-                    s += Config.LRain + '%.1f' % paccum + 'in '
-            s += '%.0f' % f['temperatureHigh'] + '/' + \
-                 '%.0f' % f['temperatureLow']
-
-        wx.setStyleSheet("#wx { font-size: " + str(int(19 * xscale)) + "px; }")
-        wx.setText(f['summary'] + "\n" + s)
+#    for i in range(0, 3):
+#        f = wxdata['hourly']['data'][i * 3 + 2]
+#        fl = forecast[i]
+#        icon = fl.findChild(QtGui.QLabel, "icon")
+#        wxiconpixmap = QtGui.QPixmap(
+#            Config.icons + "/" + f['icon'] + ".png")
+#        icon.setPixmap(wxiconpixmap.scaled(
+#            icon.width(),
+#            icon.height(),
+#            Qt.IgnoreAspectRatio,
+#            Qt.SmoothTransformation))
+#        wx = fl.findChild(QtGui.QLabel, "wx")
+#       day = fl.findChild(QtGui.QLabel, "day")
+#        day.setText("{0:%A %I:%M%p}".format(datetime.datetime.fromtimestamp(
+#            int(f['time']))))
+#        s = ''
+#        pop = 0
+#        ptype = ''
+#        paccum = 0
+#        if ('precipProbability' in f):
+#            pop = float(f['precipProbability']) * 100.0
+#        if ('precipAccumulation' in f):
+#            paccum = float(f['precipAccumulation'])
+#        if ('precipType' in f):
+#            ptype = f['precipType']
+#
+#         if (pop > 0.0 or ptype != ''):
+#             s += '%.0f' % pop + '% '
+#         if Config.metric:
+#             if (ptype == 'snow'):
+#                 if (paccum > 0.05):
+#                     s += Config.LSnow + '%.0f' % heightm(paccum) + 'mm '
+#             else:
+#                 if (paccum > 0.05):
+#                     s += Config.LRain + '%.0f' % heightm(paccum) + 'mm '
+#             s += '%.0f' % tempm(f['temperature']) + u'°C'
+#         else:
+#             if (ptype == 'snow'):
+#                 if (paccum > 0.05):
+#                     s += Config.LSnow + '%.0f' % paccum + 'in '
+#             else:
+#                 if (paccum > 0.05):
+#                     s += Config.LRain + '%.0f' % paccum + 'in '
+#             s += '%.0f' % (f['temperature']) + u'°F'
+#
+#         wx.setStyleSheet("#wx { font-size: " + str(int(25 * xscale)) + "px; }")
+#         wx.setText(f['summary'] + "\n" + s)
+#
+#     for i in range(3, 9):
+#         f = wxdata['daily']['data'][i - 3]
+#         fl = forecast[i]
+#         icon = fl.findChild(QtGui.QLabel, "icon")
+#         wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
+#         icon.setPixmap(wxiconpixmap.scaled(
+#             icon.width(),
+#             icon.height(),
+#             Qt.IgnoreAspectRatio,
+#             Qt.SmoothTransformation))
+#         wx = fl.findChild(QtGui.QLabel, "wx")
+#         day = fl.findChild(QtGui.QLabel, "day")
+#         day.setText("{0:%A}".format(datetime.datetime.fromtimestamp(
+#             int(f['time']))))
+#         s = ''
+#         pop = 0
+#         ptype = ''
+#         paccum = 0
+#         if ('precipProbability' in f):
+#             pop = float(f['precipProbability']) * 100.0
+#         if ('precipAccumulation' in f):
+#             paccum = float(f['precipAccumulation'])
+#         if ('precipType' in f):
+#             ptype = f['precipType']
+#
+#         if (pop > 0.05 or ptype != ''):
+#             s += '%.0f' % pop + '% '
+#         if Config.metric:
+#             if (ptype == 'snow'):
+#                 if (paccum > 0.05):
+#                     s += Config.LSnow + '%.0f' % heightm(paccum) + 'mm '
+#             else:
+#                 if (paccum > 0.05):
+#                     s += Config.LRain + '%.0f' % heightm(paccum) + 'mm '
+#             s += '%.0f' % tempm(f['temperatureHigh']) + '/' + \
+#                  '%.0f' % tempm(f['temperatureLow'])
+#         else:
+#             if (ptype == 'snow'):
+#                 if (paccum > 0.05):
+#                     s += Config.LSnow + '%.1f' % paccum + 'in '
+#             else:
+#                 if (paccum > 0.05):
+#                     s += Config.LRain + '%.1f' % paccum + 'in '
+#             s += '%.0f' % f['temperatureHigh'] + '/' + \
+#                  '%.0f' % f['temperatureLow']
+#
+#         wx.setStyleSheet("#wx { font-size: " + str(int(19 * xscale)) + "px; }")
+#         wx.setText(f['summary'] + "\n" + s)
 
 
 def getwx():
