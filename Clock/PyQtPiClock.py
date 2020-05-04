@@ -231,11 +231,11 @@ def gettemp():
 def wxfinished():
     global wxreply, wxdata
     global wxicon, temper, wxdesc, press, humidity
-    global wind, wind2, wdate, bottom, forecast, weather
+    global wind, wind2, wdate, bottom, forecast
     global wxicon2, temper2, wxdesc, attribution
 
-    attribution.setText("Openweathermap.org")
-    attribution2.setText("Openweathermap.org")
+    attribution.setText("Openweathermap")
+    attribution2.setText("Openweathermap")
 
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
@@ -249,8 +249,7 @@ def wxfinished():
         wxicon.height(),
         Qt.IgnoreAspectRatio,
         Qt.SmoothTransformation))
-    wxdesc.setText(f['summary'])
-    wxdesc2.setText(f['summary'])
+
 
     if Config.metric:
         temper.setText('%.1f' % (tempm(f['temperature'])) + u'°C')
@@ -417,6 +416,7 @@ def getwx():
     r = QNetworkRequest(r)
     wxreply = manager.get(r)
     wxreply.finished.connect(wxfinished)
+    print wxreply
 
 
 def getallwx():
