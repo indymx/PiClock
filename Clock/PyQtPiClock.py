@@ -1,30 +1,30 @@
 # -*- coding: utf-8 -*-                 # NOQA
 
-import sys
-import os
-
-import platform
-import signal
 import datetime
-import time
 import json
 import locale
+import os
+import platform
 import random
+import signal
+import sys
+import time
+from subprocess import Popen
+
+from PyQt4 import QtGui, QtCore, QtNetwork
+from PyQt4.QtCore import QUrl
+from PyQt4.QtCore import Qt
+from PyQt4.QtGui import QPainter, QImage, QFont
+from PyQt4.QtGui import QPixmap, QBrush, QColor
+from PyQt4.QtNetwork import QNetworkReply
+from PyQt4.QtNetwork import QNetworkRequest
+
 # import urllib
 # import re
 
-from PyQt4 import QtGui, QtCore, QtNetwork
-from PyQt4.QtGui import QPixmap, QBrush, QColor
-from PyQt4.QtGui import QPainter, QImage, QFont
-from PyQt4.QtCore import QUrl
-from PyQt4.QtCore import Qt
-from PyQt4.QtNetwork import QNetworkReply
-from PyQt4.QtNetwork import QNetworkRequest
-from subprocess import Popen
-
 sys.dont_write_bytecode = True
 from GoogleMercatorProjection import getCorners, getPoint, getTileXY, LatLng  # NOQA
-import ApiKeys                                              # NOQA
+import ApiKeys  # NOQA
 
 
 def tick():
@@ -117,11 +117,11 @@ def tick():
         lastday = now.day
         # date
         sup = 'th'
-        if (now.day == 1 or now.day == 21 or now.day == 31):
+        if now.day == 1 or now.day == 21 or now.day == 31:
             sup = 'st'
-        if (now.day == 2 or now.day == 22):
+        if now.day == 2 or now.day == 22:
             sup = 'nd'
-        if (now.day == 3 or now.day == 23):
+        if now.day == 3 or now.day == 23:
             sup = 'rd'
         if Config.DateLocale != "":
             sup = ""
@@ -147,8 +147,8 @@ def tempfinished():
                 s = ''
                 for tk in tempdata['temps']:
                     s += ' ' + tk + ':' + \
-                        "%3.1f" % (
-                            (float(tempdata['temps'][tk]) - 32.0) * 5.0 / 9.0)
+                         "%3.1f" % (
+                                 (float(tempdata['temps'][tk]) - 32.0) * 5.0 / 9.0)
     else:
         s = Config.LInsideTemp + tempdata['temp']
         if tempdata['temps']:
@@ -176,43 +176,43 @@ def heightm(f):
 
 
 def phase(f):
-    pp = Config.Lmoon1          # 'New Moon'
-    if (f > 0.9375):
-            pp = Config.Lmoon1  # 'New Moon'
-    elif (f > 0.8125):
-            pp = Config.Lmoon8  # 'Waning Crecent'
-    elif (f > 0.6875):
-            pp = Config.Lmoon7  # 'Third Quarter'
-    elif (f > 0.5625):
-            pp = Config.Lmoon6  # 'Waning Gibbous'
-    elif (f > 0.4375):
-            pp = Config.Lmoon5  # 'Full Moon'
-    elif (f > 0.3125):
-            pp = Config.Lmoon4  # 'Waxing Gibbous'
-    elif (f > 0.1875):
-            pp = Config.Lmoon3  # 'First Quarter'
-    elif (f > 0.0625):
-            pp = Config.Lmoon2  # 'Waxing Crescent'
+    pp = Config.Lmoon1  # 'New Moon'
+    if f > 0.9375:
+        pp = Config.Lmoon1  # 'New Moon'
+    elif f > 0.8125:
+        pp = Config.Lmoon8  # 'Waning Crecent'
+    elif f > 0.6875:
+        pp = Config.Lmoon7  # 'Third Quarter'
+    elif f > 0.5625:
+        pp = Config.Lmoon6  # 'Waning Gibbous'
+    elif f > 0.4375:
+        pp = Config.Lmoon5  # 'Full Moon'
+    elif f > 0.3125:
+        pp = Config.Lmoon4  # 'Waxing Gibbous'
+    elif f > 0.1875:
+        pp = Config.Lmoon3  # 'First Quarter'
+    elif f > 0.0625:
+        pp = Config.Lmoon2  # 'Waxing Crescent'
     return pp
 
 
 def bearing(f):
     wd = 'N'
-    if (f > 22.5):
+    if f > 22.5:
         wd = 'NE'
-    if (f > 67.5):
+    if f > 67.5:
         wd = 'E'
-    if (f > 112.5):
+    if f > 112.5:
         wd = 'SE'
-    if (f > 157.5):
+    if f > 157.5:
         wd = 'S'
-    if (f > 202.5):
+    if f > 202.5:
         wd = 'SW'
-    if (f > 247.5):
+    if f > 247.5:
         wd = 'W'
-    if (f > 292.5):
+    if f > 292.5:
         wd = 'NW'
-    if (f > 337.5):
+    if f > 337.5:
         wd = 'N'
     return wd
 
@@ -240,22 +240,21 @@ def wxfinished():
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
     f = wxdata['weather']
-#    wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
-#    wxicon.setPixmap(wxiconpixmap.scaled(
-#        wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
-#        Qt.SmoothTransformation))
-#    wxicon2.setPixmap(wxiconpixmap.scaled(
-#        wxicon.width(),
-#        wxicon.height(),
-#        Qt.IgnoreAspectRatio,
-#        Qt.SmoothTransformation))
-
+    #    wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
+    #    wxicon.setPixmap(wxiconpixmap.scaled(
+    #        wxicon.width(), wxicon.height(), Qt.IgnoreAspectRatio,
+    #        Qt.SmoothTransformation))
+    #    wxicon2.setPixmap(wxiconpixmap.scaled(
+    #        wxicon.width(),
+    #        wxicon.height(),
+    #        Qt.IgnoreAspectRatio,
+    #        Qt.SmoothTransformation))
 
     if Config.metric:
         temper.setText('%.1f' % (tempm(f['temperature'])) + u'°C')
         temper2.setText('%.1f' % (tempm(f['temperature'])) + u'°C')
         press.setText(Config.LPressure + '%.1f' % f['pressure'] + 'mb')
-        humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity']*100.0))
+        humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity'] * 100.0))
         wd = bearing(f['windBearing'])
         if Config.wind_degrees:
             wd = str(f['windBearing']) + u'°'
@@ -268,42 +267,43 @@ def wxfinished():
                       '%.1f' % (tempm(f['apparentTemperature'])) + u'°C')
         wdate.setText("{0:%H:%M}".format(datetime.datetime.fromtimestamp(
             int(f['time']))))
-# Config.LPrecip1hr + f['precip_1hr_metric'] + 'mm ' +
-# Config.LToday + f['precip_today_metric'] + 'mm')
+    # Config.LPrecip1hr + f['precip_1hr_metric'] + 'mm ' +
+    # Config.LToday + f['precip_today_metric'] + 'mm')
     else:
         temper.setText('%.1f' % str(f['temp']) + u'°F')
         temper2.setText('%.1f' % str(f['temp']) + u'°F')
-        press.setText(Config.LPressure + '%.2f' % pressi(f[('pressure')]) + 'in')
-        humidity.setText(Config.LHumidity + '%.0f%%' % (f[('humidity')]*100.0))
-        wd = bearing(f['wind'][0][('deg')])
+        press.setText(Config.LPressure + '%.2f' % pressi(f['pressure']) + 'in')
+        humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity'] * 100.0))
+        wd = bearing(f['wind'][0]['deg'])
         if Config.wind_degrees:
-            wd = str(f['wind'][0][('deg')]) + u'°'
+            wd = str(f['wind'][0]['deg']) + u'°'
         wind.setText(Config.LWind +
                      wd + ' ' +
-                     '%.1f' % (f['wind'][0[('speed')]]) + 'mph' +
+                     '%.1f' % (f['wind'][0['speed']]) + 'mph' +
                      Config.Lgusting +
                      '%.1f' % (f['windGust']) + 'mph')
         wind2.setText(Config.LFeelslike +
-                      '%.1f' % (f[('feels_like')]) + u'°F')
+                      '%.1f' % (f['feels_like']) + u'°F')
         wdate.setText("{0:%H:%M}".format(datetime.datetime.fromtimestamp(
             int(f['time']))))
-# Config.LPrecip1hr + f['precip_1hr_in'] + 'in ' +
-# Config.LToday + f['precip_today_in'] + 'in')
+    # Config.LPrecip1hr + f['precip_1hr_in'] + 'in ' +
+    # Config.LToday + f['precip_today_in'] + 'in')
 
     bottomText = ""
     if "sunriseTime" in wxdata["daily"]["data"][0]:
         bottomText += (Config.LSunRise +
                        "{0:%H:%M}".format(datetime.datetime.fromtimestamp(
-                        wxdata["daily"]["data"][0]["sunriseTime"])) +
+                           wxdata["daily"]["data"][0]["sunriseTime"])) +
                        Config.LSet +
                        "{0:%H:%M}".format(datetime.datetime.fromtimestamp(
-                        wxdata["daily"]["data"][0]["sunsetTime"])))
+                           wxdata["daily"]["data"][0]["sunsetTime"])))
 
     if "moonPhase" in wxdata["daily"]["data"][0]:
         bottomText += (Config.LMoonPhase +
                        phase(wxdata["daily"]["data"][0]["moonPhase"]))
 
     bottom.setText(bottomText)
+
 
 #    for i in range(0, 3):
 #        f = wxdata['hourly']['data'][i * 3 + 2]
@@ -406,17 +406,17 @@ def wxfinished():
 def getwx():
     global wxurl
     global wxreply
-    print "getting current and forecast:" + time.ctime()
-    wxurl = 'https://api.openweathermap.org/data/2.5/weather?lat='        
+    print
+    "getting current and forecast:" + time.ctime()
+    wxurl = 'https://api.openweathermap.org/data/2.5/weather?lat='
     wxurl += str(Config.location.lat) + '&lon=' + \
-        str(Config.location.lng)
-    wxurl += '&units=imperial&appid=' + ApiKeys.dsapi 
+             str(Config.location.lng)
+    wxurl += '&units=imperial&appid=' + ApiKeys.dsapi
     print wxurl
     r = QUrl(wxurl)
     r = QNetworkRequest(r)
     wxreply = manager.get(r)
     wxreply.finished.connect(wxfinished)
-    
 
 
 def getallwx():
@@ -509,9 +509,9 @@ class SS(QtGui.QLabel):
 
         bg = QtGui.QPixmap.fromImage(image)
         self.setPixmap(bg.scaled(
-                self.size(),
-                QtCore.Qt.KeepAspectRatio,
-                QtCore.Qt.SmoothTransformation))
+            self.size(),
+            QtCore.Qt.KeepAspectRatio,
+            QtCore.Qt.SmoothTransformation))
 
     def get_images(self):
         self.get_local(Config.slides)
@@ -537,8 +537,8 @@ class SS(QtGui.QLabel):
         for each in dirContent:
             fullFile = os.path.join(path, each)
             if os.path.isfile(fullFile) and (fullFile.lower().endswith('png')
-               or fullFile.lower().endswith('jpg')):
-                    self.img_list.append(fullFile)
+                                             or fullFile.lower().endswith('jpg')):
+                self.img_list.append(fullFile)
 
 
 class Radar(QtGui.QLabel):
@@ -552,7 +552,8 @@ class Radar(QtGui.QLabel):
         self.point = radar["center"]
         self.radar = radar
         self.baseurl = self.mapurl(radar, rect)
-        print "map base url: " + self.baseurl
+        print
+        "map base url: " + self.baseurl
         QtGui.QLabel.__init__(self, parent)
         self.interval = Config.radar_refresh * 60
         self.lastwx = 0
@@ -561,14 +562,14 @@ class Radar(QtGui.QLabel):
                                   rect.width(), rect.height())
         self.baseTime = 0
         self.cornerTiles = {
-         "NW": getTileXY(LatLng(self.corners["N"],
-                                self.corners["W"]), self.zoom),
-         "NE": getTileXY(LatLng(self.corners["N"],
-                                self.corners["E"]), self.zoom),
-         "SE": getTileXY(LatLng(self.corners["S"],
-                                self.corners["E"]), self.zoom),
-         "SW": getTileXY(LatLng(self.corners["S"],
-                                self.corners["W"]), self.zoom)
+            "NW": getTileXY(LatLng(self.corners["N"],
+                                   self.corners["W"]), self.zoom),
+            "NE": getTileXY(LatLng(self.corners["N"],
+                                   self.corners["E"]), self.zoom),
+            "SE": getTileXY(LatLng(self.corners["S"],
+                                   self.corners["E"]), self.zoom),
+            "SW": getTileXY(LatLng(self.corners["S"],
+                                   self.corners["W"]), self.zoom)
         }
         self.tiles = []
         self.tiletails = []
@@ -593,11 +594,11 @@ class Radar(QtGui.QLabel):
         self.wmk.setGeometry(0, 0, rect.width(), rect.height())
 
         for y in range(int(self.cornerTiles["NW"]["Y"]),
-                       int(self.cornerTiles["SW"]["Y"])+1):
+                       int(self.cornerTiles["SW"]["Y"]) + 1):
             self.totalHeight += 256
             self.tilesHeight += 1
             for x in range(int(self.cornerTiles["NW"]["X"]),
-                           int(self.cornerTiles["NE"]["X"])+1):
+                           int(self.cornerTiles["NE"]["X"]) + 1):
                 tile = {"X": x, "Y": y}
                 self.tiles.append(tile)
                 if 'color' not in radar:
@@ -616,7 +617,7 @@ class Radar(QtGui.QLabel):
                                                            )
                 self.tiletails.append(tail)
         for x in range(int(self.cornerTiles["NW"]["X"]),
-                       int(self.cornerTiles["NE"]["X"])+1):
+                       int(self.cornerTiles["NE"]["X"]) + 1):
             self.totalWidth += 256
             self.tilesWidth += 1
         self.frameImages = []
@@ -643,8 +644,8 @@ class Radar(QtGui.QLabel):
             self.displayedFrame = 0
 
     def get(self, t=0):
-        t = int(t / 600)*600
-        if t > 0 and self.baseTime == t:
+        t = int(t / 600) * 600
+        if 0 < t == self.baseTime:
             return
         if t == 0:
             t = self.baseTime
@@ -656,8 +657,9 @@ class Radar(QtGui.QLabel):
                 newf.append(f)
         self.frameImages = newf
         firstt = t - self.anim * 600
-        for tt in range(firstt, t+1, 600):
-            print "get... " + str(tt) + " " + self.myname
+        for tt in range(firstt, t + 1, 600):
+            print
+            "get... " + str(tt) + " " + self.myname
             gotit = False
             for f in self.frameImages:
                 if f["time"] == tt:
@@ -667,7 +669,7 @@ class Radar(QtGui.QLabel):
                 break
 
     def getTiles(self, t, i=0):
-        t = int(t / 600)*600
+        t = int(t / 600) * 600
         self.getTime = t
         self.getIndex = i
         if i == 0:
@@ -675,18 +677,20 @@ class Radar(QtGui.QLabel):
             self.tileQimages = []
             for tt in self.tiletails:
                 tileurl = "https://tilecache.rainviewer.com/v2/radar/%d/%s" \
-                    % (t, tt)
+                          % (t, tt)
                 self.tileurls.append(tileurl)
-        print self.myname + " " + str(self.getIndex) + " " + self.tileurls[i]
+        print
+        self.myname + " " + str(self.getIndex) + " " + self.tileurls[i]
         self.tilereq = QNetworkRequest(QUrl(self.tileurls[i]))
         self.tilereply = manager.get(self.tilereq)
         QtCore.QObject.connect(self.tilereply, QtCore.SIGNAL(
-                "finished()"), self.getTilesReply)
+            "finished()"), self.getTilesReply)
 
     def getTilesReply(self):
-        print "getTilesReply " + str(self.getIndex)
+        print
+        "getTilesReply " + str(self.getIndex)
         if self.tilereply.error() != QNetworkReply.NoError:
-                return
+            return
         self.tileQimages.append(QImage())
         self.tileQimages[self.getIndex].loadFromData(self.tilereply.readAll())
         self.getIndex = self.getIndex + 1
@@ -698,7 +702,7 @@ class Radar(QtGui.QLabel):
 
     def combineTiles(self):
         global radar1
-        ii = QImage(self.tilesWidth*256, self.tilesHeight*256,
+        ii = QImage(self.tilesWidth * 256, self.tilesHeight * 256,
                     QImage.Format_ARGB32)
         painter = QPainter()
         painter.begin(ii)
@@ -706,9 +710,9 @@ class Radar(QtGui.QLabel):
         painter.setFont(QFont("Arial", 10))
         i = 0
         xo = self.cornerTiles["NW"]["X"]
-        xo = int((int(xo) - xo)*256)
+        xo = int((int(xo) - xo) * 256)
         yo = self.cornerTiles["NW"]["Y"]
-        yo = int((int(yo) - yo)*256)
+        yo = int((int(yo) - yo) * 256)
         for y in range(0, self.totalHeight, 256):
             for x in range(0, self.totalWidth, 256):
                 if self.tileQimages[i].format() == 5:
@@ -724,15 +728,15 @@ class Radar(QtGui.QLabel):
         painter2 = QPainter()
         painter2.begin(ii2)
         timestamp = "{0:%H:%M} rainvewer.com".format(
-                    datetime.datetime.fromtimestamp(self.getTime))
+            datetime.datetime.fromtimestamp(self.getTime))
         painter2.setPen(QColor(63, 63, 63, 255))
         painter2.setFont(QFont("Arial", 8))
         painter2.setRenderHint(QPainter.TextAntialiasing)
-        painter2.drawText(3-1, 12-1, timestamp)
-        painter2.drawText(3+2, 12+1, timestamp)
+        painter2.drawText(3 - 1, 12 - 1, timestamp)
+        painter2.drawText(3 + 2, 12 + 1, timestamp)
         painter2.setPen(QColor(255, 255, 255, 255))
         painter2.drawText(3, 12, timestamp)
-        painter2.drawText(3+1, 12, timestamp)
+        painter2.drawText(3 + 1, 12, timestamp)
         painter2.end()
         painter2 = None
         ii3 = QPixmap(ii2)
@@ -751,7 +755,8 @@ class Radar(QtGui.QLabel):
         else:
             return self.googlemapurl(radar, rect)
 
-    def mapboxurl(self, radar, rect):
+    @staticmethod
+    def mapboxurl(radar, rect):
         #  note we're using google maps zoom factor.
         #  Mapbox equivilant zoom is one less
         #  They seem to be using 512x512 tiles instead of 256x256
@@ -763,11 +768,12 @@ class Radar(QtGui.QLabel):
                '/static/' + \
                str(radar['center'].lng) + ',' + \
                str(radar['center'].lat) + ',' + \
-               str(radar['zoom']-1) + ',0,0/' + \
+               str(radar['zoom'] - 1) + ',0,0/' + \
                str(rect.width()) + 'x' + str(rect.height()) + \
                '?access_token=' + ApiKeys.mbapi
 
-    def googlemapurl(self, radar, rect):
+    @staticmethod
+    def googlemapurl(radar, rect):
         urlp = []
         if len(ApiKeys.googleapi) > 0:
             urlp.append('key=' + ApiKeys.googleapi)
@@ -784,7 +790,7 @@ class Radar(QtGui.QLabel):
         urlp.append('maptype=hybrid')
 
         return 'http://maps.googleapis.com/maps/api/staticmap?' + \
-            '&'.join(urlp)
+               '&'.join(urlp)
 
     def basefinished(self):
         if self.basereply.error() != QNetworkReply.NoError:
@@ -834,14 +840,14 @@ class Radar(QtGui.QLabel):
                     for x in range(0, mk2.width()):
                         for y in range(0, mk2.height()):
                             (r, g, b, a) = QColor.fromRgba(
-                                           mk2.pixel(x, y)).getRgbF()
+                                mk2.pixel(x, y)).getRgbF()
                             r = r * cr
                             g = g * cg
                             b = b * cb
                             mk2.setPixel(x, y, QColor.fromRgbF(r, g, b, a)
                                          .rgba())
                 mk2 = mk2.scaledToHeight(mkh, 1)
-                painter.drawImage(pt.x-mkh/2, pt.y-mkh/2, mk2)
+                painter.drawImage(pt.x - mkh / 2, pt.y - mkh / 2, mk2)
 
         painter.end()
 
@@ -863,11 +869,13 @@ class Radar(QtGui.QLabel):
         self.lastget = time.time() - self.interval + random.uniform(3, 10)
 
     def wxstart(self):
-        print "wxstart for " + self.myname
+        print
+        "wxstart for " + self.myname
         self.timer.start(200)
 
     def wxstop(self):
-        print "wxstop for " + self.myname
+        print
+        "wxstop for " + self.myname
         self.timer.stop()
 
     def stop(self):
@@ -925,7 +933,8 @@ def nextframe(plusminus):
 
 class myMain(QtGui.QWidget):
 
-    def keyPressEvent(self, event):
+    @staticmethod
+    def keyPressEvent(event):
         global weatherplayer, lastkeytime
         if isinstance(event, QtGui.QKeyEvent):
             # print event.key(), format(event.key(), '08x')
@@ -958,7 +967,8 @@ class myMain(QtGui.QWidget):
                 else:
                     foreGround.show()
 
-    def mousePressEvent(self, event):
+    @staticmethod
+    def mousePressEvent(event):
         if type(event) == QtGui.QMouseEvent:
             nextframe(1)
 
@@ -969,7 +979,8 @@ if len(sys.argv) > 1:
     configname = sys.argv[1]
 
 if not os.path.isfile(configname + ".py"):
-    print "Config file not found %s" % configname + ".py"
+    print
+    "Config file not found %s" % configname + ".py"
     exit(1)
 
 Config = __import__(configname)
@@ -989,12 +1000,12 @@ except AttributeError:
 try:
     Config.weather_refresh
 except AttributeError:
-    Config.weather_refresh = 30   # minutes
+    Config.weather_refresh = 30  # minutes
 
 try:
     Config.radar_refresh
 except AttributeError:
-    Config.radar_refresh = 10    # minutes
+    Config.radar_refresh = 10  # minutes
 
 try:
     Config.fontattr
@@ -1076,7 +1087,6 @@ try:
 except AttributeError:
     Config.useslideshow = 0
 
-
 #
 # Check if Mapbox API key is set, and use mapbox if so
 try:
@@ -1084,7 +1094,6 @@ try:
         Config.usemapbox = 1
 except AttributeError:
     pass
-
 
 lastmin = -1
 lastday = -1
@@ -1226,7 +1235,6 @@ else:
     glow.setColor(QColor(dcolor))
     clockface.setGraphicsEffect(glow)
 
-
 radar1rect = QtCore.QRect(3 * xscale, 344 * yscale, 300 * xscale, 275 * yscale)
 objradar1 = Radar(foreGround, Config.radar1, radar1rect, "radar1")
 
@@ -1239,7 +1247,6 @@ objradar3 = Radar(frame2, Config.radar3, radar3rect, "radar3")
 radar4rect = QtCore.QRect(726 * xscale, 50 * yscale,
                           700 * xscale, 700 * yscale)
 objradar4 = Radar(frame2, Config.radar4, radar4rect, "radar4")
-
 
 datex = QtGui.QLabel(foreGround)
 datex.setObjectName("datex")
@@ -1450,7 +1457,6 @@ temp.setStyleSheet("#temp { font-family:sans-serif; color: " +
                    "}")
 temp.setAlignment(Qt.AlignHCenter | Qt.AlignTop)
 temp.setGeometry(0, height - 100, width, 50)
-
 
 forecast = []
 for i in range(0, 9):
