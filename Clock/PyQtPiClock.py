@@ -276,10 +276,10 @@ def wxfinished():
         humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity']*100.0))
         wd = bearing(f['wind']['deg'])
         if Config.wind_degrees:
-            wd = str(f['wind']['deg']) + u'°'
+            wd = str(f['wind']'[deg']) + u'°'
         wind.setText(Config.LWind +
                      wd + ' ' +
-                     '%.1f' % (f['wind']['speed']) + 'mph' +
+                     '%.1f' % (f['wind']['speed']) + 'mph'
         wind2.setText(Config.LFeelslike +
                       '%.1f' % (f['feels_like']) + u'°F')
         wdate.setText("{0:%H:%M}".format(datetime.datetime.fromtimestamp(
@@ -288,7 +288,7 @@ def wxfinished():
 # Config.LToday + f['precip_today_in'] + 'in')
 
     bottomText = ""
-    if "sunriseTime" in wxdata["sys"]["data"][0]:
+    if "sunriseTime" in wxdata["daily"]["data"][0]:
         bottomText += (Config.LSunRise +
                        "{0:%H:%M}".format(datetime.datetime.fromtimestamp(
                         wxdata["daily"]["data"][0]["sunriseTime"])) +
