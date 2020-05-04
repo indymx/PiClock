@@ -231,7 +231,7 @@ def gettemp():
 def wxfinished():
     global wxreply, wxdata
     global wxicon, temper, wxdesc, press, humidity
-    global wind, wind2, wdate, bottom, forecast
+    global wind, wind2, wdate, bottom, forecast, weather
     global wxicon2, temper2, wxdesc, attribution
 
     attribution.setText("Openweathermap.org")
