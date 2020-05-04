@@ -227,7 +227,6 @@ def gettemp():
     tempreply = manager.get(r)
     tempreply.finished.connect(tempfinished)
 
-
 def wxfinished():
     global wxreply, wxdata
     global wxicon, temper, wxdesc, press, humidity
@@ -239,7 +238,6 @@ def wxfinished():
 
     wxstr = str(wxreply.readAll())
     wxdata = json.loads(wxstr)
-    print (json.dumps(wxdata, indent=4, sort_keys=True))
     f = wxdata['weather']
     wxiconpixmap = QtGui.QPixmap(Config.icons + "/" + f['icon'] + ".png")
     wxicon.setPixmap(wxiconpixmap.scaled(
@@ -272,27 +270,25 @@ def wxfinished():
 # Config.LPrecip1hr + f['precip_1hr_metric'] + 'mm ' +
 # Config.LToday + f['precip_today_metric'] + 'mm')
     else:
-        temper.setText('%.1f' % (f['temperature']) + u'°F')
-        temper2.setText('%.1f' % (f['temperature']) + u'°F')
+        temper.setText('%.1f' % (f['temp']) + u'°F')
+        temper2.setText('%.1f' % (f['temp']) + u'°F')
         press.setText(Config.LPressure + '%.2f' % pressi(f['pressure']) + 'in')
         humidity.setText(Config.LHumidity + '%.0f%%' % (f['humidity']*100.0))
-        wd = bearing(f['windBearing'])
+        wd = bearing(f['wind['deg']'])
         if Config.wind_degrees:
-            wd = str(f['windBearing']) + u'°'
+            wd = str(f['wind['deg']) + u'°'
         wind.setText(Config.LWind +
                      wd + ' ' +
-                     '%.1f' % (f['windSpeed']) + 'mph' +
-                     Config.Lgusting +
-                     '%.1f' % (f['windGust']) + 'mph')
+                     '%.1f' % (f['wind['speed']) + 'mph' +
         wind2.setText(Config.LFeelslike +
-                      '%.1f' % (f['apparentTemperature']) + u'°F')
+                      '%.1f' % (f['feels_like']) + u'°F')
         wdate.setText("{0:%H:%M}".format(datetime.datetime.fromtimestamp(
             int(f['time']))))
 # Config.LPrecip1hr + f['precip_1hr_in'] + 'in ' +
 # Config.LToday + f['precip_today_in'] + 'in')
 
     bottomText = ""
-    if "sunriseTime" in wxdata["daily"]["data"][0]:
+    if "sunriseTime" in wxdata["sys"]["data"][0]:
         bottomText += (Config.LSunRise +
                        "{0:%H:%M}".format(datetime.datetime.fromtimestamp(
                         wxdata["daily"]["data"][0]["sunriseTime"])) +
