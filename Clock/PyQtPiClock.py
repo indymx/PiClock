@@ -289,10 +289,10 @@ def wxfinished():
             int(f['time']))))
 # Config.LPrecip1hr + f['precip_1hr_in'] + 'in ' +
 # Config.LToday + f['precip_today_in'] + 'in')
-print temper
-print wd
-print press
-print humidity
+        print (temper)
+        print (wd)
+        print (press)            
+        print (humidity)
     bottomText = ""
     if "sunriseTime" in wxdata["daily"]["data"][0]:
         bottomText += (Config.LSunRise +
